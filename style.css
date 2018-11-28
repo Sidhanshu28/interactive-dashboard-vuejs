@@ -1,0 +1,49 @@
+#header{
+    font-size: 30px;
+    font-family: "Roboto";
+    background-color: cadetblue;
+}
+
+#rightbar{
+    background-color: lightsalmon;
+    height: 100%;
+    max-width:17vw;
+    transition : 300ms ease;
+}
+#leftbar{
+    background-color: lightsalmon;
+    height: 100%;
+    max-width:15vw;
+    transition : 300ms ease;
+}
+#centered{
+    height: 100%;   
+}
+
+.div-content{
+    height:100%;
+    width:100%;
+    background-color: aquamarine;
+}
+
+#rightbar-icon{
+    padding:15px;
+    font-size: 36px !important;
+    cursor:pointer;
+}
+
+#leftbar-icon{
+    padding:15px;
+    font-size: 36px !important;
+    cursor:pointer;
+}
+.collapse-div{
+    max-width:4vw !important;
+}
+
+.selected-hide {
+    display:none;
+}
+.selected-show{
+    display: block;
+}
