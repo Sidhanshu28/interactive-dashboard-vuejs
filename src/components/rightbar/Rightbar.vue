@@ -5,15 +5,19 @@
         <i class="material-icons" id="rightbar-icon" v-on:click="slideRight">menu</i>
       </div>
     </div>
-    <RightbarMeasure/>
-    <br>
-    <RightbarGender/>
-    <br>
-    <RightbarSite/>
-    <br>
-    <RightbarUnits/>
-    <br>
-    <RightbarAge/>
+    <div class="row container no-gutters p-0">
+      <div class="col rightbar-menu">
+        <RightbarMeasure/>
+        <br>
+        <RightbarGender/>
+        <br>
+        <RightbarSite/>
+        <br>
+        <RightbarUnits/>
+        <br>
+        <RightbarAge/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -25,7 +29,7 @@ import RightbarSite from "./RightbarSite";
 import RightbarUnits from "./RightbarUnits";
 
 export default {
-  name:"Rightbar",
+  name: "Rightbar",
   methods: {
     slideRight: function() {
       $("#rightbar").toggleClass("collapse-div");

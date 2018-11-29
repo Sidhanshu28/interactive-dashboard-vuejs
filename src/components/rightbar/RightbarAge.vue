@@ -2,7 +2,7 @@
   <!-- Age Dropdown start-->
   <div class="row justify-content-start ml-1">
     <div class="class">
-      <div class="dropdown" id="age-dropdown">
+      <div class="dropdown age-dropdown" id="age-dropdown">
         Age : &ensp; &ensp;
         <button
           class="btn btn-secondary dropdown-toggle age-button"
