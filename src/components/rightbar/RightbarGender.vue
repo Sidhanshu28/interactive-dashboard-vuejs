@@ -1,26 +1,54 @@
 <template>
   <!-- Gender toggle bar start-->
-  <div class="row justify-content-start ml-1">
-    <div class="class">
-      <div class="btn-group btn-group-toggle gender-toggle" data-toggle="buttons">
-        Gender : &ensp;
-        <label class="btn btn-secondary active">
-          <input type="radio" name="male" id="male" autocomplete="off" checked> Male
-        </label>
-        <label class="btn btn-secondary">
-          <input type="radio" name="female" id="female" autocomplete="off"> Female
-        </label>
-        <label class="btn btn-secondary">
-          <input type="radio" name="male-female" id="male-female" autocomplete="off"> Both
-        </label>
+  <!-- <div class="row justify-content-center m-2">
+    <div class="class"> -->
+      <div class="row justify-content-center m-2 rightbar-menu">
+        <div class="class">
+            Gender : &ensp;
+            <input
+              class="btn btn-secondary active"
+              v-model="selected"
+              type="radio"
+              value="Male"
+              autocomplete="off"
+              checked
+            >Male
+            <!-- </label> -->
+            <input
+            class="btn btn-secondary"
+              v-model="selected"
+              type="radio"
+              value="Female"
+              autocomplete="off"
+            >Female
+            <!-- <label class="btn btn-secondary"></label> -->
+            <input
+                v-model="selected"
+                class="btn btn-secondary"
+                type="radio"
+                value="Both"
+                autocomplete="off"
+              >Both
+            <!-- <label ></label> -->
+        </div>
       </div>
-    </div>
-  </div>
+      <!-- <div class="row justify-content-center rightbar-menu-collapsed">
+        <div class="col">
+          <span>{{selected}}</span>
+        </div>
+      </div> -->
+    <!-- </div>
+  </div> -->
   <!-- Gender toggle bar end-->
 </template>
-<script>
-    export default {
-        name : "RightbarGender",
-    };
 
+<script>
+export default {
+  name: "RightbarGender",
+  data() {
+    return {
+      selected: "Male"
+    };
+  }
+};
 </script>

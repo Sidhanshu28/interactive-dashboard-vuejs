@@ -1,26 +1,50 @@
 <template>
-    <!-- Units toggle bar start-->
-                <div class="row justify-content-start ml-1">
-                    <div class="class">
-                        <div class="btn-group btn-group-toggle unit-toggle" data-toggle="buttons">
-                            Unit : &ensp; &ensp;
-                            <label class="btn btn-secondary ">
-                                <input type="radio" name="count" id="count" autocomplete="off" checked> Count
-                            </label>
-                            <label class="btn btn-secondary active">
-                                <input type="radio" name="rate" id="rate" autocomplete="off"> Rate
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="radio" name="percentage" id="percentage" autocomplete="off"> Percentage
-                            </label>
-                        </div>
-                    </div>
-                </div>
-    <!-- Units toggle bar end-->
+  <!-- Units toggle bar start-->
+  <!-- <div class="row justify-content-center m-2">
+    <div class="class"> -->
+      <div class="row justify-content-center m-2 rightbar-menu">
+        <div class="class">
+            Unit : &ensp; &ensp;
+             <input
+                v-model="selected"
+                type="radio"
+                name="units"
+                autocomplete="off"
+                value="Count"
+                checked
+              > Count
+              <input
+                v-model="selected"
+                type="radio"
+                name="units"
+                autocomplete="off"
+                value="Rate"
+              > Rate
+              <input
+                v-model="selected"
+                type="radio"
+                name="units"
+                autocomplete="off"
+                value="% age"
+              > % age
+        </div>
+      </div>
+      <!-- <div class="row justify-content-center rightbar-menu-collapsed">
+        <div class="col">
+          <span>{{selected}}</span>
+        </div>
+      </div> -->
+    <!-- </div>
+  </div> -->
+  <!-- Units toggle bar end-->
 </template>
 <script>
-    export default {
-        name : "RightbarUnits",
+export default {
+  name: "RightbarUnits",
+  data() {
+    return {
+      selected: "Count"
     };
-
+  }
+};
 </script>

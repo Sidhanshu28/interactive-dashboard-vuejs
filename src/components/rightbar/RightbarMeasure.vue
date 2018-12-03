@@ -1,26 +1,53 @@
 <template>
   <!-- Measure toggle bar start-->
-  <div class="row justify-content-start ml-1">
-    <div class="class">
-      <div class="btn-group btn-group-toggle measure-toggle" data-toggle="buttons">
-        Measure : &ensp;
-        <label class="btn btn-secondary active">
-          <input type="radio" name="yll" id="yll" autocomplete="off" checked> YLL
-        </label>
-        <label class="btn btn-secondary">
-          <input type="radio" name="yld" id="yld" autocomplete="off"> YLD
-        </label>
-        <label class="btn btn-secondary">
-          <input type="radio" name="daly" id="daly" autocomplete="off"> DALY
-        </label>
+  <!-- <div class="row justify-content-center m-2">
+    <div class="class"> -->
+      <div class="row justify-content-center m-2 rightbar-menu">
+        <div class="class"> 
+            Measure : &ensp;
+              <input
+                v-model="selected"
+                type="radio"
+                name="measure"
+                autocomplete="off"
+                value="YLL"
+                checked
+              > YLL
+              <input
+                v-model="selected"
+                type="radio"
+                name="measure"
+                autocomplete="off"
+                value="YLD"
+              > YLD
+              <input
+                v-model="selected"
+                type="radio"
+                name="measure"
+                autocomplete="off"
+                value="DALY"
+              > DALY
+          
+        </div>
       </div>
-    </div>
-  </div>
+      <!-- <div class="row justify-content-center rightbar-menu-collapsed">
+        <div class="col">
+          <span>{{selected}}</span>
+        </div>
+      </div> -->
+    <!-- </div>
+  </div> -->
+
   <!-- Measure toggle bar end-->
 </template>
-<script>
-    export default {
-        name : "RightbarMeasure",
-    };
 
+<script>
+export default {
+  name: "RightbarMeasure",
+  data(){
+    return{
+      selected : "YLL"
+    };
+  }
+};
 </script>

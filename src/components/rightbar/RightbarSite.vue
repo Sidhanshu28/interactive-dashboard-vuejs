@@ -1,26 +1,50 @@
 <template>
   <!-- Site toggle bar start-->
-  <div class="row justify-content-start ml-1">
-    <div class="class">
-      <div class="btn-group btn-group-toggle site-toggle" data-toggle="buttons">
-        Site : &ensp; &ensp; &ensp;
-        <label class="btn btn-secondary active">
-          <input type="radio" name="urban" id="urban" autocomplete="off" checked> Urban
-        </label>
-        <label class="btn btn-secondary">
-          <input type="radio" name="rural" id="rural" autocomplete="off"> Rural
-        </label>
-        <label class="btn btn-secondary">
-          <input type="radio" name="urban-rural" id="urban-rural" autocomplete="off"> Both
-        </label>
+  <!-- <div class="row justify-content-center m-2">
+    <div class="class"> -->
+      <div class="row justify-content-center m-2 rightbar-menu">
+        <div class="class">
+            Site : &ensp; &ensp; &ensp;
+             <input
+                v-model="selected"
+                type="radio"
+                name="site"
+                autocomplete="off"
+                value="Urban"
+                checked
+              > Urban
+              <input
+                v-model="selected"
+                type="radio"
+                name="site"
+                autocomplete="off"
+                value="Rural"
+              > Rural
+              <input
+                v-model="selected"
+                type="radio"
+                name="site"
+                autocomplete="off"
+                value="Both"
+              > Both
+        </div>
       </div>
-    </div>
-  </div>
+      <!-- <div class="row justify-content-center rightbar-menu-collapsed">
+        <div class="col">
+          <span>{{selected}}</span>
+        </div>
+      </div> -->
+    <!-- </div>
+  </div> -->
   <!-- Site toggle bar end-->
 </template>
 <script>
-    export default {
-        name : "RightbarSite",
+export default {
+  name: "RightbarSite",
+  data() {
+    return {
+      selected: "Urban"
     };
-
+  }
+};
 </script>
