@@ -1,8 +1,9 @@
 <template>
-  <div class="container-fluid no-gutters main" style="overflow-x:hidden">
+  <div class="container-fluid no-gutters main" style="overflow-x:hidden;background-color: #E0F2F1;">
     <Header/>
     <div class="row" style="display: flex">
       <Leftbar/>
+      <Loader/>
       <CenterContainer/>
       <Rightbar/>
     </div>
@@ -14,6 +15,7 @@ import Header from "./components/Header";
 import Leftbar from "./components/Leftbar";
 import Rightbar from "./components/rightbar/Rightbar";
 import CenterContainer from "./components/centercontainer/CenterContainer";
+import Loader from "./components/Loader";
 
 export default {
   name: "App",
@@ -21,7 +23,8 @@ export default {
     Header,
     Leftbar,
     Rightbar,
-    CenterContainer
+    CenterContainer,
+    Loader
   }
 };
 </script>

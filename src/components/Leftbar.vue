@@ -21,6 +21,10 @@
 
 <script>
 import axios from "axios";
+import mapData from "./highcharts/MapChart";
+import { EventBus } from "../event-bus";
+import variables from "../config";
+
 export default {
   name: "Leftbar",
   methods: {
@@ -38,6 +42,14 @@ export default {
       this.$data.selectedOu = tagid.split("orgUnit")[1];
       if (this.$data.selectedOu !== undefined) {
         this.$data.selectedOuName = this.getOuName(this.$data.selectedOu);
+        if (this.$data.selectedOu == variables.indiaOuId) $("#btnSite").show();
+        else {
+          $("#btnSite").hide();
+        }
+        EventBus.$emit("ou-changed", {
+          ou: this.$data.selectedOu,
+          type: "age"
+        });
         $("#" + tagid).toggleClass("selected-org-unit");
         if (this.$data.previousou != "")
           $("#" + this.$data.previousou).toggleClass("selected-org-unit");
@@ -59,6 +71,11 @@ export default {
   created() {
     this.getOU();
   },
+
+  updated(){
+      EventBus.$emit("ou-created", { ou: this.$data.selectedOu, type: "age" });
+  },
+
   data() {
     return {
       selectedOu: "",

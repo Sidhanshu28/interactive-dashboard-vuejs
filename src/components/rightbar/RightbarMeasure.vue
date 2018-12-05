@@ -2,8 +2,8 @@
   <!-- Measure toggle bar start-->
   <!-- <div class="row justify-content-center m-2">
     <div class="class"> -->
-      <div class="row justify-content-center m-2 rightbar-menu">
-        <div class="class"> 
+      <div class="row justify-content-center p-1 rightbar-menu-main">
+        <div class="class rightbar-menu"> 
             Measure : &ensp;
               <input
                 v-model="selected"

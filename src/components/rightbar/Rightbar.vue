@@ -1,25 +1,20 @@
 <template>
-  <div id="rightbar" class="col p-0 collapse-div">
-    <div class="row">
+  <div id="rightbar" class="col collapse-div">
+    <div class="row justify-content-start">
       <div class="class">
         <i class="material-icons" id="rightbar-icon" v-on:click="slideRight">menu</i>
       </div>
     </div>
-    <!-- <div class="row container no-gutters p-0">
-      <div class="col rightbar-menu-main"> -->
-        <RightbarMeasure/>
-        <!-- <br> -->
-        <RightbarGender/>
-        <!-- <br> -->
-        <RightbarSite/>
-        <!-- <br> -->
-        <RightbarUnits/>
-        <!-- <br> -->
-        <RightbarAge/>
-      </div>
-      <!-- <br> -->
-    <!-- </div>
-  </div> -->
+    <RightbarMeasure/>
+    <!-- <br> -->
+    <RightbarGender/>
+    <!-- <br> -->
+    <RightbarSite/>
+    <!-- <br> -->
+    <RightbarUnits/>
+    <!-- <br> -->
+    <RightbarAge/>
+  </div>
 </template>
 
 <script>

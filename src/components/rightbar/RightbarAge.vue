@@ -2,8 +2,8 @@
   <!-- Age Dropdown start-->
   <!-- <div class="row justify-content-center m-2">
     <div class="class"> -->
-      <div class="row justify-content-center m-2 rightbar-menu">
-        <div class="class">
+      <div class="row justify-content-center p-1 rightbar-menu-main">
+        <div class="class rightbar-menu">
             Age : &ensp; &ensp;
             <select
               class="age-button"
@@ -14,7 +14,7 @@
                 class="dropdown-item"
                 v-for="age in agegroups"
                 :value="age.text"
-                :key="age.text"
+                :key="age.id"
               >{{age.text}}</option>
             </select>  
         </div>
@@ -31,22 +31,25 @@
 </template>
 
 <script>
+
+import data from "../../config.js";
+
 export default {
   name: "RightbarAge",
   data() {
     return {
       agegroups: [
-        { text: "Select Age" },
-        { text: "Select All" },
-        { text: "All ages" },
-        { text: "0-4" },
-        { text: "5-14" },
-        { text: "15-29" },
-        { text: "30-49" },
-        { text: "50-59" },
-        { text: "60-69" },
-        { text: "70-79" },
-        { text: "80 and above" }
+        { text: "Select Age" , id : "select"},
+        { text: "Select All" , id : "selectall" },
+        { text: "All ages", id : data.all_ages_id },
+        { text: "0-4" , id : data.age_0_4_id},
+        { text: "5-14" , id : data.age_5_14_id},
+        { text: "15-29" , id : data.age_15_29_id},
+        { text: "30-49" , id : data.age_30_49_id},
+        { text: "50-59" , id : data.age_50_59_id},
+        { text: "60-69" , id : data.age_60_69_id},
+        { text: "70-79" , id : data.age_70_79_id},
+        { text: "80 and above" , id : data.age_above80_id}
       ],
       selected: "Select Age"
     };
