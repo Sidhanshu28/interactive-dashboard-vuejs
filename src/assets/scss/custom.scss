@@ -67,12 +67,12 @@
     height:28px;
 }
 
-#btnAge, #btnGender, #btnSite {
+#btnAge, #btnGender, #btnSite, #btnLocation {
     display: inline-block;
     margin:0.2rem;
 }
 
-#btnSite{
+#btnSite, #btnLocation{
     display: none;
 }
 

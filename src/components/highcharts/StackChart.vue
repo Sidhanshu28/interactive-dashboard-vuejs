@@ -18,9 +18,15 @@ export default {
   },
   methods: {
     getApiData: function(params) {
+      $("#loader").show();
       if (params.ou != "") this.ou = params.ou;
       else params.ou = this.ou;
-
+      var defaultIndiaApi =
+        "../../analytics.json?dimension=pe:2015&dimension=ou:" +
+        variables.allouIDs +
+        "&dimension=dx:" +
+        variables.yll +
+        "&displayProperty=NAME&outputIdScheme=UID";
       var indiaApi =
         "../../analytics.json?dimension=pe:2015&dimension=" +
         variables.gender_id +
@@ -54,12 +60,15 @@ export default {
         variables.yll +
         "&displayProperty=NAME&outputIdScheme=UID";
       axios
-        .get(params.ou == variables.indiaOuId ? indiaApi : statesApi)
+        .get(params.ou == variables.indiaOuId ? ( params.type== "location" ? defaultIndiaApi : indiaApi) : statesApi)
         .then(response => {
           $(".bottom-options").removeClass("selected-option");
-          if (params.ou == variables.indiaOuId) $("#btnSite").show();
-          else {
+          if (params.ou == variables.indiaOuId) {
+            $("#btnSite").show();
+            $("#btnLocation").show();
+          } else {
             $("#btnSite").hide();
+            $("#btnLocation").hide();
           }
           this.chartOptions.series = [];
           var dataloop = response.data.rows;
@@ -67,11 +76,13 @@ export default {
             this.chartOptions.series = [];
             return;
           }
-          $("#loader").show();
+          
           if (params.type == "gender")
             this.sortDataByGender(dataloop, params.ou);
           else if (params.type == "age")
             this.sortDataByAge(dataloop, params.ou);
+          else if (params.type == "location")
+            this.sortDataByLoc(dataloop, params.ou);
           else {
             this.sortDataBySite(dataloop, params.ou);
           }
@@ -187,6 +198,37 @@ export default {
           setTimeout(function() {
             vm.chartOptions.series = [...Object.values(temp[0])];
             vm.chartOptions.xAxis.categories = [...variables.site_categories];
+            $("#loader").hide();
+          }, 2000);
+        }
+      }
+    },
+    sortDataByLoc: function(dataloop, ou) {
+      $("#btnLocation").addClass("selected-option");
+      let temp = JSON.parse(JSON.stringify(variables.diseases));
+      for (let i = 0, len = dataloop.length; i < len; i++) {
+        var disease_id = dataloop[i][0];
+        var value = dataloop[i][3];
+        for (let j = 0; j < Object.keys(variables.stateNames[0]).length; j++) {
+          console.log(Object.keys(variables.stateNames[0])[j]);
+          if (dataloop[i][2] == Object.keys(variables.stateNames[0])[j]) {
+            temp[0][disease_id].data[j] === undefined
+              ? (temp[0][disease_id].data[j] = parseFloat(value))
+              : (temp[0][disease_id].data[j] += parseFloat(value));
+          } else {
+             temp[0][disease_id].data[j] === undefined
+              ? (temp[0][disease_id].data[j] = 0)
+              : (temp[0][disease_id].data[j] += 0);
+          }
+        }
+
+        if (i == len - 1) {
+          var vm = this;
+          setTimeout(function() {
+            vm.chartOptions.series = [...Object.values(temp[0])];
+            vm.chartOptions.xAxis.categories = [
+              ...Object.values(variables.stateNames[0])
+            ];
             $("#loader").hide();
           }, 2000);
         }

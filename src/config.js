@@ -243,6 +243,10 @@ const statesMapData = [{
     'BBnVIaukxaN': {data : 0},
     'x5TafwbmlFt': {data : 0},
     'KfUK7GlZqiu': {data : 0},
+    'XX7mkLtUkZT': {data : 0},
+    'A64ajbtzogd': {data : 0},
+    'ITt5l6I85Uf': {data : 0},
+    'XzbGlw8pVXQ': {data : 0},
     'VTNC2rB3AzO': {data : 0},
     'nAEXiUnvksD': {data : 0},
     'WwBDw1qLQfH': {data : 0},
@@ -253,10 +257,6 @@ const statesMapData = [{
     'N2K15gP6SKn': {data : 0},
     'osxywsmbdA9': {data : 0},
     'JQq12xOtj1a': {data : 0},
-    'XX7mkLtUkZT': {data : 0},
-    'A64ajbtzogd': {data : 0},
-    'ITt5l6I85Uf': {data : 0},
-    'XzbGlw8pVXQ': {data : 0},
 }];
 
 
@@ -299,7 +299,7 @@ const statesMapName = [{
     'JQq12xOtj1a': {name :'in-wb'}
 }];
 
-const stateNames = {
+const stateNames = [{
     "J1qTQ3TKlNU": "Andaman and Nicobar",
     "ft1FqZHkEIV": "Andhra Pradesh",
     "UBKSsG72Cg8": "Arunachal Pradesh",
@@ -339,7 +339,7 @@ const stateNames = {
     "osxywsmbdA9": "Uttarakhand",
     "JQq12xOtj1a": "West Bengal",
 
-}
+}]
 
 export default {
     yll: yll_id,

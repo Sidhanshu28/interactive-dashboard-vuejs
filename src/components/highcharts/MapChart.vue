@@ -71,18 +71,23 @@ export default {
         for (let i = 0, len = loopdata.length; i < len; i++) {
           var ouid = loopdata[i][2];
           var value = parseFloat(loopdata[i][3]);
-          if(temp[0][ouid] !== undefined){temp[0][ouid].data += value;}
+          if (temp[0][ouid] !== undefined) {
+            temp[0][ouid].data += value;
+          }
 
           if (i == len - 1) {
             var vm = this;
             $("#loader").show();
             setTimeout(function() {
-                let temp_arr = [];
-                for(let j=0; j < Object.keys(temp[0]).length;j++){
-                    temp_arr.push([variables.statesMapName[0][Object.keys(temp[0])[j]].name, temp[0][Object.keys(temp[0])[j]].data]);
-                    vm.mapOptions.series[0].data = [...temp_arr];
-                    console.log(vm.mapOptions.series[0].data);
-                }
+              let temp_arr = [];
+              for (let j = 0; j < Object.keys(temp[0]).length; j++) {
+                temp_arr.push([
+                  variables.statesMapName[0][Object.keys(temp[0])[j]].name,
+                  temp[0][Object.keys(temp[0])[j]].data
+                ]);
+              }
+              vm.mapOptions.series[0].data = [...temp_arr];
+              console.log(vm.mapOptions.series[0].data);
               $("#loader").hide();
             }, 2000);
           }

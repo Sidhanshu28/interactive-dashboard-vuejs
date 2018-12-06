@@ -51,6 +51,11 @@
           v-on:click="sendParams('site')"
           id="btnSite"
         >Site</button>
+        <button
+          class="btn btn-default bottom-options"
+          v-on:click="sendParams('location')"
+          id="btnLocation"
+        >Location</button>
       </div>
     </div>
   </div>
@@ -90,6 +95,11 @@ export default {
         EventBus.$emit("param", {
           ou: params.data().selectedOu,
           type: "gender"
+        });
+      } else if (t == "location") {
+        EventBus.$emit("param", {
+          ou: params.data().selectedOu,
+          type: "location"
         });
       } else {
         EventBus.$emit("param", {
