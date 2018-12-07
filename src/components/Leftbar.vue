@@ -42,9 +42,9 @@ export default {
       this.$data.selectedOu = tagid.split("orgUnit")[1];
       if (this.$data.selectedOu !== undefined) {
         this.$data.selectedOuName = this.getOuName(this.$data.selectedOu);
-        if (this.$data.selectedOu == variables.indiaOuId) $("#btnSite").show();
+        if (this.$data.selectedOu == variables.indiaOuId) $(".rightbarsite").removeClass("hidediv");
         else {
-          $("#btnSite").hide();
+          $(".rightbarsite").addClass("hidediv");
         }
         EventBus.$emit("ou-changed", {
           ou: this.$data.selectedOu,

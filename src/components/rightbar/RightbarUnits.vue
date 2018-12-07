@@ -29,13 +29,7 @@
               > % age
         </div>
       </div>
-      <!-- <div class="row justify-content-center rightbar-menu-collapsed">
-        <div class="col">
-          <span>{{selected}}</span>
-        </div>
-      </div> -->
-    <!-- </div>
-  </div> -->
+   
   <!-- Units toggle bar end-->
 </template>
 <script>

@@ -2,7 +2,7 @@
   <!-- Measure toggle bar start-->
   <!-- <div class="row justify-content-center m-2">
     <div class="class"> -->
-      <div class="row justify-content-center p-1 rightbar-menu-main">
+      <div class="row justify-content-center p-1 rightbar-menu-main rightbarmeasure">
         <div class="class rightbar-menu"> 
             Measure : &ensp;
               <input
@@ -10,7 +10,7 @@
                 type="radio"
                 name="measure"
                 autocomplete="off"
-                value="YLL"
+                :value="yll"
                 checked
               > YLL
               <input
@@ -18,36 +18,48 @@
                 type="radio"
                 name="measure"
                 autocomplete="off"
-                value="YLD"
+                :value="yld"
               > YLD
               <input
                 v-model="selected"
                 type="radio"
                 name="measure"
                 autocomplete="off"
-                value="DALY"
+                :value="daly"
               > DALY
           
         </div>
       </div>
-      <!-- <div class="row justify-content-center rightbar-menu-collapsed">
-        <div class="col">
-          <span>{{selected}}</span>
-        </div>
-      </div> -->
-    <!-- </div>
-  </div> -->
-
   <!-- Measure toggle bar end-->
 </template>
 
 <script>
+import { EventBus } from "../../event-bus";
+import variables from "../../config.js";
+
 export default {
   name: "RightbarMeasure",
   data(){
     return{
-      selected : "YLL"
+      selected : variables.yll,
+      yll : variables.yll,
     };
+  },
+  methods :{
+    sendFilter : function(){
+      // EventBus.$emit("filters", {value : this.selected.split("-")[1], filter:"measure"});
+    },
+    reset : function(){
+      this.selected = "YLL"
+    }
+  },
+  watch : {
+    selected : function(){
+      this.sendFilter();
+    }
+  },
+  mounted() {
+    // EventBus.$on("reset", this.reset);
   }
 };
 </script>

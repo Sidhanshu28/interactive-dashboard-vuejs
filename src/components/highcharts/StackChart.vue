@@ -12,104 +12,119 @@ import { EventBus } from "../../event-bus";
 export default {
   name: "Chart",
   mounted() {
-    EventBus.$on("ou-created", this.getApiData);
-    EventBus.$on("ou-changed", this.getApiData);
-    EventBus.$on("param", this.getApiData);
+    EventBus.$on("filters", this.setFilters);
+    EventBus.$on("ou-created", this.setSelectedOu);
+    EventBus.$on("ou-changed", this.setSelectedOu);
+    EventBus.$on("param", this.setSelections);
+  },
+  watch: {
+    ou: function() {
+      this.getApiData();
+    },
+    selections: function() {
+      this.getApiData();
+    },
+    genderFilter: function() {
+      this.getApiData();
+    },
+    ageFilter: function() {
+      this.getApiData();
+    },
+    siteFilter: function() {
+      this.getApiData();
+    },
+    measureFilter: function() {
+      this.getApiData();
+    }
   },
   methods: {
-    getApiData: function(params) {
+    handleShowHide: function() {
+      $(".bottom-options").removeClass("selected-option");
+      if (this.ou == variables.indiaOuId) {
+        $("#btnSite , #btnLocation").show();
+      } else {
+        $("#btnSite, #btnLocation").hide();
+        $(".rightbarsite").addClass("hidediv");
+      }
+    },
+    setFilters: function(params) {
+      if (params.filter == "gender") {
+        this.genderFilter = params.value;
+      } else if (params.filter == "age") {
+        this.ageFilter = params.value;
+        $(".rightbarage").addClass("hidediv");
+      } else if (params.filter == "site") {
+        this.siteFilter = params.value;
+      } else if (params.filter == "measure") {
+        this.measureFilter = params.value;
+      } else {
+      }
+    },
+    setSelectedOu: function(params) {
+      params.ou != "" ? (this.ou = params.ou) : this.ou;
+      this.setSelections(params);
+    },
+    setSelections: function(params) {
+      this.selections = params.type;
+      this.genderFilter = variables.gender_main_var;
+      this.ageFilter = variables.age_main_var;
+      this.siteFilter = variables.site_main_var;
+      this.measureFilter = variables.yll;
+      // EventBus.$emit("reset");
+    },
+    getApiData: function() {
       $("#loader").show();
-      if (params.ou != "") this.ou = params.ou;
-      else params.ou = this.ou;
-      var defaultIndiaApi =
-        "../../analytics.json?dimension=pe:2015&dimension=ou:" +
-        variables.allouIDs +
-        "&dimension=dx:" +
-        variables.yll +
-        "&displayProperty=NAME&outputIdScheme=UID";
-      var indiaApi =
-        "../../analytics.json?dimension=pe:2015&dimension=" +
-        variables.gender_id +
-        ":" +
-        variables.gender_main_var +
-        "&dimension=" +
-        variables.age_id +
-        ":" +
-        variables.age_main_var +
-        "&dimension=" +
-        variables.site_id +
-        ":" +
-        variables.site_main_var +
-        "&dimension=ou:" +
-        params.ou +
-        "&dimension=dx:" +
-        variables.yll +
-        "&displayProperty=NAME&outputIdScheme=UID";
-      var statesApi =
-        "../../analytics.json?dimension=pe:2015&dimension=" +
-        variables.gender_id +
-        ":" +
-        variables.gender_main_var +
-        "&dimension=" +
-        variables.age_id +
-        ":" +
-        variables.age_main_var +
-        "&dimension=ou:" +
-        params.ou +
-        "&dimension=dx:" +
-        variables.yll +
-        "&displayProperty=NAME&outputIdScheme=UID";
+
+      this.setApis();
       axios
-        .get(params.ou == variables.indiaOuId ? ( params.type== "location" ? defaultIndiaApi : indiaApi) : statesApi)
+        .get(
+          this.ou == variables.indiaOuId
+            ? this.selections == "location"
+              ? this.defaultIndiaApi
+              : this.indiaApi
+            : this.statesApi
+        )
         .then(response => {
-          $(".bottom-options").removeClass("selected-option");
-          if (params.ou == variables.indiaOuId) {
-            $("#btnSite").show();
-            $("#btnLocation").show();
-          } else {
-            $("#btnSite").hide();
-            $("#btnLocation").hide();
-          }
+          this.handleShowHide();
           this.chartOptions.series = [];
-          var dataloop = response.data.rows;
-          if (dataloop.length == 0) {
-            this.chartOptions.series = [];
-            return;
-          }
-          
-          if (params.type == "gender")
-            this.sortDataByGender(dataloop, params.ou);
-          else if (params.type == "age")
-            this.sortDataByAge(dataloop, params.ou);
-          else if (params.type == "location")
-            this.sortDataByLoc(dataloop, params.ou);
-          else {
-            this.sortDataBySite(dataloop, params.ou);
-          }
+          var dataloop = "";
+          response.data.rows.length == 0
+            ? (this.chartOptions.series = [])
+            : (dataloop = response.data.rows);
+
+          this.selections == "gender"
+            ? this.sortDataByGender(dataloop)
+            : this.selections == "age"
+            ? this.sortDataByAge(dataloop)
+            : this.selections == "location"
+            ? this.sortDataByLoc(dataloop)
+            : this.sortDataBySite(dataloop);
         })
         .catch(error => {
           console.log(error);
         });
     },
-    sortDataByGender: function(dataloop, ou) {
+    sortDataByGender: function(dataloop) {
       $("#btnGender").addClass("selected-option");
       let temp = JSON.parse(JSON.stringify(variables.diseases));
       for (let i = 0, len = dataloop.length; i < len; i++) {
         var disease_id = dataloop[i][0];
-        var value = ou == variables.indiaOuId ? dataloop[i][6] : dataloop[i][5];
-        if (dataloop[i][2] == variables.gender_male_id) {
-          temp[0][disease_id].data[0] === undefined
-            ? (temp[0][disease_id].data[0] = parseFloat(value))
-            : (temp[0][disease_id].data[0] += parseFloat(value));
-        } else if (dataloop[i][2] == variables.gender_female_id) {
-          temp[0][disease_id].data[1] === undefined
-            ? (temp[0][disease_id].data[1] = parseFloat(value))
-            : (temp[0][disease_id].data[1] += parseFloat(value));
-        } else {
-        }
+        var value =
+          this.ou == variables.indiaOuId
+            ? parseFloat(dataloop[i][6])
+            : parseFloat(dataloop[i][5]);
+        var gender_id = dataloop[i][2];
+        gender_id == variables.gender_male_id
+          ? temp[0][disease_id].data[0] === undefined
+            ? (temp[0][disease_id].data[0] = value)
+            : (temp[0][disease_id].data[0] += value)
+          : temp[0][disease_id].data[1] === undefined
+          ? (temp[0][disease_id].data[1] = value)
+          : (temp[0][disease_id].data[1] += value);
+
         temp[0][disease_id].data[2] === undefined
-          ? (temp[0][disease_id].data[2] = parseFloat(value))
-          : (temp[0][disease_id].data[2] += parseFloat(value));
+          ? (temp[0][disease_id].data[2] = value)
+          : (temp[0][disease_id].data[2] += value);
 
         if (i == len - 1) {
           var vm = this;
@@ -121,46 +136,47 @@ export default {
         }
       }
     },
-    sortDataByAge: function(dataloop, ou) {
+    sortDataByAge: function(dataloop) {
       $("#btnAge").addClass("selected-option");
       let temp = JSON.parse(JSON.stringify(variables.diseases));
       for (let i = 0, len = dataloop.length; i < len; i++) {
         var disease_id = dataloop[i][0];
-        var value = ou == variables.indiaOuId ? dataloop[i][6] : dataloop[i][5];
-        if (dataloop[i][3] == variables.age_0_4_id) {
-          temp[0][disease_id].data[0] === undefined
-            ? (temp[0][disease_id].data[0] = parseFloat(value))
-            : (temp[0][disease_id].data[0] += parseFloat(value));
-        } else if (dataloop[i][3] == variables.age_5_14_id) {
-          temp[0][disease_id].data[1] === undefined
-            ? (temp[0][disease_id].data[1] = parseFloat(value))
-            : (temp[0][disease_id].data[1] += parseFloat(value));
-        } else if (dataloop[i][3] == variables.age_15_29_id) {
-          temp[0][disease_id].data[2] === undefined
-            ? (temp[0][disease_id].data[2] = parseFloat(value))
-            : (temp[0][disease_id].data[2] += parseFloat(value));
-        } else if (dataloop[i][3] == variables.age_30_49_id) {
-          temp[0][disease_id].data[3] === undefined
-            ? (temp[0][disease_id].data[3] = parseFloat(value))
-            : (temp[0][disease_id].data[3] += parseFloat(value));
-        } else if (dataloop[i][3] == variables.age_50_59_id) {
-          temp[0][disease_id].data[4] === undefined
-            ? (temp[0][disease_id].data[4] = parseFloat(value))
-            : (temp[0][disease_id].data[4] += parseFloat(value));
-        } else if (dataloop[i][3] == variables.age_60_69_id) {
-          temp[0][disease_id].data[5] === undefined
-            ? (temp[0][disease_id].data[5] = parseFloat(value))
-            : (temp[0][disease_id].data[5] += parseFloat(value));
-        } else if (dataloop[i][3] == variables.age_70_79_id) {
-          temp[0][disease_id].data[6] === undefined
-            ? (temp[0][disease_id].data[6] = parseFloat(value))
-            : (temp[0][disease_id].data[6] += parseFloat(value));
-        } else if (dataloop[i][3] == variables.age_above80_id) {
-          temp[0][disease_id].data[7] === undefined
-            ? (temp[0][disease_id].data[7] = parseFloat(value))
-            : (temp[0][disease_id].data[7] += parseFloat(value));
-        } else {
-        }
+        var value =
+          this.ou == variables.indiaOuId
+            ? parseFloat(dataloop[i][6])
+            : parseFloat(dataloop[i][5]);
+        var age_id_match = dataloop[i][3];
+        age_id_match == variables.age_0_4_id
+          ? temp[0][disease_id].data[0] === undefined
+            ? (temp[0][disease_id].data[0] = value)
+            : (temp[0][disease_id].data[0] += value)
+          : age_id_match == variables.age_5_14_id
+          ? temp[0][disease_id].data[1] === undefined
+            ? (temp[0][disease_id].data[1] = value)
+            : (temp[0][disease_id].data[1] += value)
+          : age_id_match == variables.age_15_29_id
+          ? temp[0][disease_id].data[2] === undefined
+            ? (temp[0][disease_id].data[2] = value)
+            : (temp[0][disease_id].data[2] += value)
+          : age_id_match == variables.age_30_49_id
+          ? temp[0][disease_id].data[3] === undefined
+            ? (temp[0][disease_id].data[3] = value)
+            : (temp[0][disease_id].data[3] += value)
+          : age_id_match == variables.age_50_59_id
+          ? temp[0][disease_id].data[4] === undefined
+            ? (temp[0][disease_id].data[4] = value)
+            : (temp[0][disease_id].data[4] += value)
+          : age_id_match == variables.age_60_69_id
+          ? temp[0][disease_id].data[5] === undefined
+            ? (temp[0][disease_id].data[5] = value)
+            : (temp[0][disease_id].data[5] += value)
+          : age_id_match == variables.age_70_79_id
+          ? temp[0][disease_id].data[6] === undefined
+            ? (temp[0][disease_id].data[6] = value)
+            : (temp[0][disease_id].data[6] += value)
+          : temp[0][disease_id].data[7] === undefined
+          ? (temp[0][disease_id].data[7] = value)
+          : (temp[0][disease_id].data[7] += value);
 
         if (i == len - 1) {
           var vm = this;
@@ -172,26 +188,27 @@ export default {
         }
       }
     },
-    sortDataBySite: function(dataloop, ou) {
-      console.log(dataloop);
+    sortDataBySite: function(dataloop) {
       $("#btnSite").addClass("selected-option");
       let temp = JSON.parse(JSON.stringify(variables.diseases));
       for (let i = 0, len = dataloop.length; i < len; i++) {
         var disease_id = dataloop[i][0];
-        var value = ou == variables.indiaOuId ? dataloop[i][6] : dataloop[i][5];
-        if (dataloop[i][4] == variables.site_urban_id) {
-          temp[0][disease_id].data[0] === undefined
-            ? (temp[0][disease_id].data[0] = parseFloat(value))
-            : (temp[0][disease_id].data[0] += parseFloat(value));
-        } else if (dataloop[i][4] == variables.site_rural_id) {
-          temp[0][disease_id].data[1] === undefined
-            ? (temp[0][disease_id].data[1] = parseFloat(value))
-            : (temp[0][disease_id].data[1] += parseFloat(value));
-        } else {
-        }
+        var value =
+          this.ou == variables.indiaOuId
+            ? parseFloat(dataloop[i][6])
+            : parseFloat(dataloop[i][5]);
+        var site_id_match = dataloop[i][4];
+        site_id_match == variables.site_urban_id
+          ? temp[0][disease_id].data[0] === undefined
+            ? (temp[0][disease_id].data[0] = value)
+            : (temp[0][disease_id].data[0] += value)
+          : temp[0][disease_id].data[1] === undefined
+          ? (temp[0][disease_id].data[1] = value)
+          : (temp[0][disease_id].data[1] += value);
+
         temp[0][disease_id].data[2] === undefined
-          ? (temp[0][disease_id].data[2] = parseFloat(value))
-          : (temp[0][disease_id].data[2] += parseFloat(value));
+          ? (temp[0][disease_id].data[2] = value)
+          : (temp[0][disease_id].data[2] += value);
 
         if (i == len - 1) {
           var vm = this;
@@ -203,23 +220,21 @@ export default {
         }
       }
     },
-    sortDataByLoc: function(dataloop, ou) {
+    sortDataByLoc: function(dataloop) {
       $("#btnLocation").addClass("selected-option");
       let temp = JSON.parse(JSON.stringify(variables.diseases));
       for (let i = 0, len = dataloop.length; i < len; i++) {
         var disease_id = dataloop[i][0];
         var value = dataloop[i][3];
+        var stateData = dataloop[i][2];
         for (let j = 0; j < Object.keys(variables.stateNames[0]).length; j++) {
-          console.log(Object.keys(variables.stateNames[0])[j]);
-          if (dataloop[i][2] == Object.keys(variables.stateNames[0])[j]) {
-            temp[0][disease_id].data[j] === undefined
+          stateData == Object.keys(variables.stateNames[0])[j]
+            ? temp[0][disease_id].data[j] === undefined
               ? (temp[0][disease_id].data[j] = parseFloat(value))
-              : (temp[0][disease_id].data[j] += parseFloat(value));
-          } else {
-             temp[0][disease_id].data[j] === undefined
-              ? (temp[0][disease_id].data[j] = 0)
-              : (temp[0][disease_id].data[j] += 0);
-          }
+              : (temp[0][disease_id].data[j] += parseFloat(value))
+            : temp[0][disease_id].data[j] === undefined
+            ? (temp[0][disease_id].data[j] = 0)
+            : (temp[0][disease_id].data[j] += 0);
         }
 
         if (i == len - 1) {
@@ -233,11 +248,58 @@ export default {
           }, 2000);
         }
       }
+    },
+    setApis: function() {
+      this.statesApi =
+        "../../analytics.json?dimension=pe:2015&dimension=" +
+        variables.gender_id +
+        ":" +
+        this.genderFilter +
+        "&dimension=" +
+        variables.age_id +
+        ":" +
+        this.ageFilter +
+        "&dimension=ou:" +
+        this.ou +
+        "&dimension=dx:" +
+        this.measureFilter +
+        "&displayProperty=NAME&outputIdScheme=UID";
+      this.indiaApi =
+        "../../analytics.json?dimension=pe:2015&dimension=" +
+        variables.gender_id +
+        ":" +
+        this.genderFilter +
+        "&dimension=" +
+        variables.age_id +
+        ":" +
+        this.ageFilter +
+        "&dimension=" +
+        variables.site_id +
+        ":" +
+        this.siteFilter +
+        "&dimension=ou:" +
+        this.ou +
+        "&dimension=dx:" +
+        this.measureFilter +
+        "&displayProperty=NAME&outputIdScheme=UID";
     }
   },
   data() {
     return {
+      selections: "age",
+      genderFilter: variables.gender_main_var,
+      ageFilter: variables.age_main_var,
+      siteFilter: variables.site_main_var,
+      measureFilter: variables.yll,
       ou: "",
+      statesApi: "",
+      defaultIndiaApi:
+        "../../analytics.json?dimension=pe:2015&dimension=ou:" +
+        variables.allouIDs +
+        "&dimension=dx:" +
+        variables.yll +
+        "&displayProperty=NAME&outputIdScheme=UID",
+      indiaApi: "",
       updateArgs: [true, true, { duration: 1000 }],
       chartOptions: {
         chart: {
@@ -291,10 +353,11 @@ export default {
       }
     };
   },
-  beforeDestroy() {
+  destroyed() {
     EventBus.$off("ou-created", this.getApiData);
     EventBus.$off("ou-changed", this.getApiData);
     EventBus.$off("param", this.getApiData);
+    EventBus.$off("filters", this.setFilters);
   }
 };
 </script>

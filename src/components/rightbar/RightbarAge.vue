@@ -1,8 +1,6 @@
 <template>
   <!-- Age Dropdown start-->
-  <!-- <div class="row justify-content-center m-2">
-    <div class="class"> -->
-      <div class="row justify-content-center p-1 rightbar-menu-main">
+      <div class="row justify-content-center p-1 rightbar-menu-main rightbarage hidediv">
         <div class="class rightbar-menu">
             Age : &ensp; &ensp;
             <select
@@ -13,25 +11,19 @@
               <option
                 class="dropdown-item"
                 v-for="age in agegroups"
-                :value="age.text"
-                :key="age.id"
+                :value="age"
+                :key="age"
               >{{age.text}}</option>
             </select>  
         </div>
       </div>
-      <!-- <div class="row justify-content-center rightbar-menu-collapsed">
-        <div class="col">
-          <span>{{selected}}</span>
-        </div>
-      </div> -->
-    <!-- </div>
-  </div> -->
+    
 
   <!-- Age Dropdown end-->
 </template>
 
 <script>
-
+import { EventBus } from "../../event-bus";
 import data from "../../config.js";
 
 export default {
@@ -39,9 +31,8 @@ export default {
   data() {
     return {
       agegroups: [
-        { text: "Select Age" , id : "select"},
-        { text: "Select All" , id : "selectall" },
-        { text: "All ages", id : data.all_ages_id },
+        // { text: "Select Age" , id : "select"},
+        { text: "All" , id : data.age_main_var},
         { text: "0-4" , id : data.age_0_4_id},
         { text: "5-14" , id : data.age_5_14_id},
         { text: "15-29" , id : data.age_15_29_id},
@@ -51,8 +42,24 @@ export default {
         { text: "70-79" , id : data.age_70_79_id},
         { text: "80 and above" , id : data.age_above80_id}
       ],
-      selected: "Select Age"
+      selected: { text: "All" , id : data.age_main_var}
     };
+  },
+  methods :{
+    sendFilter : function(){
+      EventBus.$emit("filters", {value : this.selected.id, filter:"age"});
+    },
+    reset : function(){
+      this.selected = { text: "All" , id : data.age_main_var}
+    }
+  },
+  watch : {
+    selected : function(val){
+      this.sendFilter();
+    }
+  },
+  mounted() {
+    EventBus.$on("reset", this.reset);
   }
 };
 </script>

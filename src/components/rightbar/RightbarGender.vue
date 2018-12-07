@@ -1,54 +1,66 @@
 <template>
   <!-- Gender toggle bar start-->
-  <!-- <div class="row justify-content-center m-2">
-    <div class="class"> -->
-      <div class="row justify-content-center p-1 rightbar-menu-main">
+  
+      <div class="row justify-content-center p-1 rightbar-menu-main rightbargender">
         <div class="class rightbar-menu">
             Gender : &ensp;
             <input
               class="btn btn-secondary active"
               v-model="selected"
               type="radio"
-              value="Male"
+              :value="male"
               autocomplete="off"
-              checked
             >Male
-            <!-- </label> -->
+  
             <input
             class="btn btn-secondary"
               v-model="selected"
               type="radio"
-              value="Female"
+              :value="female"
               autocomplete="off"
             >Female
-            <!-- <label class="btn btn-secondary"></label> -->
+            
             <input
                 v-model="selected"
                 class="btn btn-secondary"
                 type="radio"
-                value="Both"
+                :value="both"
                 autocomplete="off"
               >Both
-            <!-- <label ></label> -->
+           
         </div>
       </div>
-      <!-- <div class="row justify-content-center rightbar-menu-collapsed">
-        <div class="col">
-          <span>{{selected}}</span>
-        </div>
-      </div> -->
-    <!-- </div>
-  </div> -->
-  <!-- Gender toggle bar end-->
 </template>
 
 <script>
+import { EventBus } from "../../event-bus";
+import variables from "../../config.js";
+
 export default {
   name: "RightbarGender",
   data() {
     return {
-      selected: "Male"
+      selected: variables.gender_main_var,
+      male : variables.gender_male_id,
+      female : variables.gender_female_id,
+      both : variables.gender_main_var,
     };
+  },
+  methods :{
+    sendFilter : function(){
+      EventBus.$emit("filters", {value : this.selected, filter:"gender"});
+    },
+    reset : function(){
+      this.selected = this.both
+    }
+  },
+  watch : {
+    selected : function(){
+      this.sendFilter();
+    }
+  },
+  mounted() {
+    EventBus.$on("reset", this.reset);
   }
 };
 </script>

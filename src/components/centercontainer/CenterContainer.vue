@@ -86,22 +86,27 @@ export default {
     },
     sendParams: function(t) {
       $(".bottom-options").removeClass("selected-option");
+      $(".rightbar-menu-main").removeClass("hidediv");
       if (t == "age") {
+        $(".rightbarage").addClass("hidediv");
         EventBus.$emit("param", {
           ou: params.data().selectedOu,
           type: "age"
         });
       } else if (t == "gender") {
+        $(".rightbargender").addClass("hidediv");
         EventBus.$emit("param", {
           ou: params.data().selectedOu,
           type: "gender"
         });
       } else if (t == "location") {
+        // $(".rightbarlocation").addClass("hidediv");
         EventBus.$emit("param", {
           ou: params.data().selectedOu,
           type: "location"
         });
       } else {
+        $(".rightbarsite").addClass("hidediv");
         EventBus.$emit("param", {
           ou: params.data().selectedOu,
           type: "site"
