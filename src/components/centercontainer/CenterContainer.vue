@@ -1,5 +1,5 @@
 <template>
-  <div id="center-container" class="col">
+  <div id="center-container" class="col" ref="centerc">
     <div class="row justify-content-center">
       <div id="cc" class="col" style="max-width:fit-content">
         <div class="button-grp">

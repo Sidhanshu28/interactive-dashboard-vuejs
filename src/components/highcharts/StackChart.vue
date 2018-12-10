@@ -40,11 +40,10 @@ export default {
       else this.diseases = variables.diseases_deaths;
       this.getApiData();
     },
-    width : function(){
-      this.chartOptions.reflow();
-    }
+   
   },
   methods: {
+   
     handleShowHide: function() {
       $(".bottom-options").removeClass("selected-option");
       if (this.ou == variables.indiaOuId) {
@@ -81,7 +80,6 @@ export default {
     },
     getApiData: function() {
       $("#loader").show();
-
       this.setApis();
       axios
         .get(
@@ -367,9 +365,6 @@ export default {
     EventBus.$off("ou-changed", this.getApiData);
     EventBus.$off("param", this.getApiData);
     EventBus.$off("filters", this.setFilters);
-  },
-  updated(){
-    this.width = $("#center-container").style.width
   }
 };
 </script>
