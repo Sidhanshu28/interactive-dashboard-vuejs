@@ -33,8 +33,15 @@ export default {
     siteFilter: function() {
       this.getApiData();
     },
-    measureFilter: function() {
+    measureFilter: function(value) {
+      if (value == variables.yll) this.diseases = variables.diseases_yll;
+      else if (value == variables.yld) this.diseases = variables.diseases_yld;
+      else if (value == variables.daly) this.diseases = variables.diseases_daly;
+      else this.diseases = variables.diseases_deaths;
       this.getApiData();
+    },
+    width : function(){
+      this.chartOptions.reflow();
     }
   },
   methods: {
@@ -106,7 +113,7 @@ export default {
     },
     sortDataByGender: function(dataloop) {
       $("#btnGender").addClass("selected-option");
-      let temp = JSON.parse(JSON.stringify(variables.diseases));
+      let temp = JSON.parse(JSON.stringify(this.diseases));
       for (let i = 0, len = dataloop.length; i < len; i++) {
         var disease_id = dataloop[i][0];
         var value =
@@ -138,7 +145,7 @@ export default {
     },
     sortDataByAge: function(dataloop) {
       $("#btnAge").addClass("selected-option");
-      let temp = JSON.parse(JSON.stringify(variables.diseases));
+      let temp = JSON.parse(JSON.stringify(this.diseases));
       for (let i = 0, len = dataloop.length; i < len; i++) {
         var disease_id = dataloop[i][0];
         var value =
@@ -190,7 +197,7 @@ export default {
     },
     sortDataBySite: function(dataloop) {
       $("#btnSite").addClass("selected-option");
-      let temp = JSON.parse(JSON.stringify(variables.diseases));
+      let temp = JSON.parse(JSON.stringify(this.diseases));
       for (let i = 0, len = dataloop.length; i < len; i++) {
         var disease_id = dataloop[i][0];
         var value =
@@ -222,7 +229,7 @@ export default {
     },
     sortDataByLoc: function(dataloop) {
       $("#btnLocation").addClass("selected-option");
-      let temp = JSON.parse(JSON.stringify(variables.diseases));
+      let temp = JSON.parse(JSON.stringify(this.diseases));
       for (let i = 0, len = dataloop.length; i < len; i++) {
         var disease_id = dataloop[i][0];
         var value = dataloop[i][3];
@@ -286,7 +293,9 @@ export default {
   },
   data() {
     return {
+      width : "",
       selections: "age",
+      diseases: variables.diseases_yll,
       genderFilter: variables.gender_main_var,
       ageFilter: variables.age_main_var,
       siteFilter: variables.site_main_var,
@@ -358,6 +367,9 @@ export default {
     EventBus.$off("ou-changed", this.getApiData);
     EventBus.$off("param", this.getApiData);
     EventBus.$off("filters", this.setFilters);
+  },
+  updated(){
+    this.width = $("#center-container").style.width
   }
 };
 </script>

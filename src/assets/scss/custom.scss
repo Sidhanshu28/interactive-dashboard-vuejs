@@ -2,18 +2,18 @@
 #header{
     font-size: 30px;
     font-family: "Roboto";
-    background-color: #044036;
-    color:white;
+    background-color: #FF9100;
+    color:black;
 }
 
 #rightbar{
-    background-color: #00796B;
+    background-color: #FFB74D;
     height: 100%;
     max-width:19vw;
     transition : 300ms ease;
 }
 #leftbar{
-    background-color: #00796B;
+    background-color: #FFB74D;
     height: 100%;
     max-width:19vw;
     transition : 300ms ease;
@@ -33,14 +33,14 @@
     padding:30px 15px;
     font-size: 36px !important;
     cursor:pointer;
-    color:white;
+    color:black;
 }
 
 #leftbar-icon{
     padding:30px 15px;
     font-size: 36px !important;
     cursor:pointer;
-    color:white;
+    color:black;
 }
 
 .rightbar-menu{

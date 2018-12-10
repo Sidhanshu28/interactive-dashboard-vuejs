@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid no-gutters main" style="overflow-x:hidden;background-color: #E0F2F1;">
+  <div class="container-fluid no-gutters main" style="overflow-x:hidden;background-color: #FFF3E0;">
     <Header/>
     <div class="row" style="display: flex">
       <Leftbar/>

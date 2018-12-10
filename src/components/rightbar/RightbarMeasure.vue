@@ -27,6 +27,13 @@
                 autocomplete="off"
                 :value="daly"
               > DALY
+              <input
+                v-model="selected"
+                type="radio"
+                name="measure"
+                autocomplete="off"
+                :value="deaths"
+              > Deaths
           
         </div>
       </div>
@@ -43,11 +50,14 @@ export default {
     return{
       selected : variables.yll,
       yll : variables.yll,
+      yld : variables.yld,
+      daly : variables.daly,
+      deaths : variables.deaths
     };
   },
   methods :{
     sendFilter : function(){
-      // EventBus.$emit("filters", {value : this.selected.split("-")[1], filter:"measure"});
+      EventBus.$emit("filters", {value : this.selected, filter:"measure"});
     },
     reset : function(){
       this.selected = "YLL"
