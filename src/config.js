@@ -522,7 +522,7 @@ const diseases_obj_yld = [{
         name: "Self-inflicted injuries (suicide) - YLD",
         data: []
     },
-    'CPSynCWa3F3': {
+    'ˀ': {
         name: "Breast cancer - YLD",
         data: []
     },
@@ -786,7 +786,7 @@ const diseases_obj_daly = [{
 
 const indiaOuId = "cBx1Gyq06xU";
 
-const allouIDs = "J1qTQ3TKlNU;ft1FqZHkEIV;UBKSsG72Cg8;nCTGAP1pUqK;z8g8gAEeird;xHmXn2gn3rS;x2yMjFqOh5R;AOxuENOsJFH;YE9KMXV2qC3;dBKf3LDpfYl;N40kwU7hERO;kBajdL7waFu;XJMaF0ZzGo1;wTQrXc3kOgA;y85LzeVqQNo;YkAq1G0JN6Y;qA92TbABPdT;TABbglhSurr;B8ffozIh5D0;BBnVIaukxaN;x5TafwbmlFt;KfUK7GlZqiu;XX7mkLtUkZT;A64ajbtzogd;ITt5l6I85Uf;n5C3pZ1QbDV;XzbGlw8pVXQ;Cbw7y8SiYyW;VTNC2rB3AzO;nAEXiUnvksD;WwBDw1qLQfH;yWmW9qcMVwZ;yBFfg3amqn7;BvnPG4cWtyx;DrcfNamsJRj;N2K15gP6SKn;osxywsmbdA9;JQq12xOtj1a;ˀ";
+const allouIDs = "J1qTQ3TKlNU;ft1FqZHkEIV;UBKSsG72Cg8;nCTGAP1pUqK;z8g8gAEeird;xHmXn2gn3rS;x2yMjFqOh5R;AOxuENOsJFH;YE9KMXV2qC3;dBKf3LDpfYl;N40kwU7hERO;kBajdL7waFu;XJMaF0ZzGo1;wTQrXc3kOgA;y85LzeVqQNo;YkAq1G0JN6Y;qA92TbABPdT;TABbglhSurr;B8ffozIh5D0;BBnVIaukxaN;x5TafwbmlFt;KfUK7GlZqiu;XX7mkLtUkZT;A64ajbtzogd;ITt5l6I85Uf;n5C3pZ1QbDV;XzbGlw8pVXQ;Cbw7y8SiYyW;VTNC2rB3AzO;nAEXiUnvksD;WwBDw1qLQfH;yWmW9qcMVwZ;yBFfg3amqn7;BvnPG4cWtyx;DrcfNamsJRj;N2K15gP6SKn;osxywsmbdA9;JQq12xOtj1a";
 
 const statesMapData = [{
     // 'J1qTQ3TKlNU': {data : 0},

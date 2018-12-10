@@ -39,11 +39,9 @@ export default {
       else if (value == variables.daly) this.diseases = variables.diseases_daly;
       else this.diseases = variables.diseases_deaths;
       this.getApiData();
-    },
-   
+    }
   },
   methods: {
-   
     handleShowHide: function() {
       $(".bottom-options").removeClass("selected-option");
       if (this.ou == variables.indiaOuId) {
@@ -230,7 +228,7 @@ export default {
       let temp = JSON.parse(JSON.stringify(this.diseases));
       for (let i = 0, len = dataloop.length; i < len; i++) {
         var disease_id = dataloop[i][0];
-        var value = dataloop[i][3];
+        var value = parseFloat(dataloop[i][5]);
         var stateData = dataloop[i][2];
         for (let j = 0; j < Object.keys(variables.stateNames[0]).length; j++) {
           stateData == Object.keys(variables.stateNames[0])[j]
@@ -287,11 +285,26 @@ export default {
         "&dimension=dx:" +
         this.measureFilter +
         "&displayProperty=NAME&outputIdScheme=UID";
+        
+      this.defaultIndiaApi =
+        "../../analytics.json?dimension=pe:2015&dimension=ou:" +
+        variables.allouIDs +
+        "&dimension="+
+        variables.gender_id +
+        ":" +
+        this.genderFilter +
+        "&dimension=" +
+        variables.age_id +
+        ":" +
+        this.ageFilter +
+        "&dimension=dx:" +
+        this.measureFilter +
+        "&displayProperty=NAME&outputIdScheme=UID";
     }
   },
   data() {
     return {
-      width : "",
+      width: "",
       selections: "age",
       diseases: variables.diseases_yll,
       genderFilter: variables.gender_main_var,
@@ -304,7 +317,7 @@ export default {
         "../../analytics.json?dimension=pe:2015&dimension=ou:" +
         variables.allouIDs +
         "&dimension=dx:" +
-        variables.yll +
+        this.measureFilter +
         "&displayProperty=NAME&outputIdScheme=UID",
       indiaApi: "",
       updateArgs: [true, true, { duration: 1000 }],
