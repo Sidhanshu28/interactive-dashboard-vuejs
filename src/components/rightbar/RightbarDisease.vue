@@ -1,7 +1,7 @@
 <template>
   <!-- Disease Dropdown start-->
   <div class="row justify-content-center p-1 rightbar-menu-main rightbardisease">
-    <div class="class rightbar-menu">
+    <div class="class col rightbar-menu">
       Diseases : &ensp; &ensp;
       <select
         class="disease-button"
@@ -25,15 +25,19 @@ export default {
   data() {
     return {
       diseases: [],
-      selected : ""
+      diseasesTemp: [{id:'',text:'Select/unselect disease',value:''}],
+      selected : {id:'',text:'Select/unselect disease',value:''}
     };
   },
   methods: {
+    reset : function(){
+      this.selected = {id:'',text:'Select/unselect disease',value:''}
+    },
     sendFilter: function() {
       EventBus.$emit("filters", { value: this.selected, filter: "disease" });
     },
     changeDropDown: function(m) {
-      this.diseases = [];
+      this.diseases = [...this.diseasesTemp];
       if (m == variables.yll) {
         for (
           var i = 0;
@@ -117,6 +121,7 @@ export default {
   mounted() {
     this.changeDropDown(variables.yll);
     EventBus.$on("diseasechange", this.changeDropDown);
+    EventBus.$on("reset", this.reset);
   }
 };
 </script>

@@ -10,6 +10,8 @@ import stockInit from 'highcharts/modules/stock'
 import treemapInit from 'highcharts/modules/treemap'
 import exportingInit from 'highcharts/modules/exporting'
 import Router from 'vue-router'
+import d2headerBar from 'dhis2-header-vue'
+import HighchartsCustomEvents from 'highcharts-custom-events'
 // import addWorldMap from './indiamap'
 
 stockInit(Highcharts)
@@ -19,6 +21,8 @@ treemapInit(Highcharts)
 // addWorldMap(Highcharts)
 Vue.use(HighchartsVue)
 Vue.use(Router)
+Vue.use(d2headerBar)
+// Vue.use(HighchartsCustomEvents)
 
 
 Vue.config.productionTip = true;

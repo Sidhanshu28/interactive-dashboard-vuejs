@@ -1,22 +1,25 @@
 #headerapp {
-    font-size: 30px;
+    font-size: 25px;
     font-family: "Roboto";
-    background-color: #FF9100;
+    background-color:white;
+    border-bottom: 2px solid rgb(39, 102, 150);
     color: black;
 }
 
 #rightbar {
-    background-color: #FFB74D;
+    background-color: rgb(39, 102, 150);
     min-height: 100%;
-    max-width: 19vw;
-    transition: 300ms ease;
+    // border-left: 2px solid lightgray;
+    // max-width: 19vw;
+    transition: 500ms ease;
 }
 
 #leftbar {
-    background-color: #FFB74D;
+    background-color: rgb(39, 102, 150);
+    // border-right:2px solid lightgray;
     min-height: 100%;
-    max-width: 19vw;
-    transition: 300ms ease;
+    // max-width: 19vw;
+    transition: 500ms ease;
 }
 
 #center-container {
@@ -31,30 +34,31 @@
 }
 
 #rightbar-icon {
-    padding: 30px 15px;
-    font-size: 36px !important;
+    padding: 12;
+    font-size: 26px;
     cursor: pointer;
-    color: black;
+    color: white;
 }
 
 #leftbar-icon {
-    padding: 30px 15px;
-    font-size: 36px !important;
+    padding: 12;
+    font-size: 26px;
     cursor: pointer;
-    color: black;
+    color: white;
 }
 
 .rightbar-menu {
     padding: 10px;
     font-size: 14px;
     background: #fff;
-    min-width: 18vw;
+    min-width: 16vw;
     margin: 0.5rem;
     border-radius: 20px;
+    border: 1px solid lightgray;
 }
 
 .collapse-div {
-    max-width: 4vw !important;
+    max-width: 3.5vw !important;
 
     .rightbar-menu-main {
         display: none;
@@ -92,7 +96,12 @@
 
 .highcharts-container {
     width: 100% !important;
+    margin:auto;
     border-radius: 0 20px 20px 20px;
+}
+
+.highcharts-container:not(.heatmap){
+    height: 90%;
 }
 
 .highcharts-legend {
@@ -100,4 +109,29 @@
     border-radius: 20px;
 }
 
+.xAxis span:hover {
+    font-weight: 600;
+}
 
+.highcharts-axis-line,.highcharts-grid-line, .highcharts-tick{
+    display:none;
+}
+
+.selected-xaxis{
+    font-weight: bold;
+}
+.highcharts-root{
+    // height:100% !important;
+    width: 100% !important;
+}
+// .fixed-right{
+//     position: fixed;
+//     right:0;
+//     z-index:999;
+// }
+
+// .fixed-left{
+//     position: fixed;
+//     left:0;
+//     z-index:999;
+// }

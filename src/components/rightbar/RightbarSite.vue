@@ -3,7 +3,7 @@
   <!-- <div class="row justify-content-center m-2">
     <div class="class"> -->
       <div class="row justify-content-center p-1 rightbar-menu-main rightbarsite">
-        <div class="class rightbar-menu">
+        <div class="class col rightbar-menu">
             Site : &ensp; &ensp; &ensp;
              <input
                 v-model="selected"
@@ -50,7 +50,7 @@ export default {
       EventBus.$emit("filters", {value : this.selected, filter:"site"});
     },
     reset : function(){
-      this.selected = "Both-GkHE9YVFkpE;Vl6ZLaCt2mW"
+      this.selected = this.both
     }
   },
   watch : {

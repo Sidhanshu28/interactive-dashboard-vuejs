@@ -3,7 +3,9 @@
     <div class="row justify-content-center">
       <div id="cc" class="col" style="max-width:fit-content">
         <div class="button-grp">
-          <button @click="select('stackChart')" :class="{btnActive: selected === 'stackChart'}">
+          <button @click="select('stackChart')" :class="{btnActive: selected === 'stackChart'}" data-toggle="tooltip"
+          data-placement="bottom"
+          title="Stack Chart">
             <img
               src="../../assets/images/stackedChart.jpg"
               alt="Stack Chart"
@@ -11,20 +13,30 @@
               height="60px"
             >
           </button>
-          <button @click="select('mapChart')" :class="{btnActive: selected === 'mapChart'}">
+          <button @click="select('mapChart')" :class="{btnActive: selected === 'mapChart'}" data-toggle="tooltip"
+          data-placement="bottom"
+          title="Map Chart">
             <img src="../../assets/images/map.png" alt="Map Chart" width="60px" height="60px">
           </button>
-          <button @click="select('pointChart')" :class="{btnActive: selected === 'pointChart'}">
+          <button @click="select('pointChart')" :class="{btnActive: selected === 'pointChart'}" data-toggle="tooltip"
+          data-placement="bottom"
+          title="Line Chart">
             <img src="../../assets/images/linechart.png" alt="Point Chart" width="60px" height="60px">
           </button>
-          <button @click="select('pieChart')" :class="{btnActive: selected === 'pieChart'}">
+          <button @click="select('pieChart')" :class="{btnActive: selected === 'pieChart'}" data-toggle="tooltip"
+          data-placement="bottom"
+          title="Pie Chart">
             <img src="../../assets/images/piechart.png" alt="Pie Chart" width="60px" height="60px">
           </button>
-          <button @click="select('treeChart')" :class="{btnActive: selected === 'treeChart'}">
+          <button @click="select('treeChart')" :class="{btnActive: selected === 'treeChart'}" data-toggle="tooltip"
+          data-placement="bottom"
+          title="Tree Chart">
             <img src="../../assets/images/treemap.png" alt="Tree Chart" width="60px" height="60px">
           </button>
-          <button @click="select('heatChart')" :class="{btnActive: selected === 'heatChart'}">
-            <img src="" alt="Heat Chart" width="60px" height="60px">
+          <button @click="select('heatChart')" :class="{btnActive: selected === 'heatChart'}" data-toggle="tooltip"
+          data-placement="bottom"
+          title="Heat Chart">
+            <img src="../../assets/images/heatmap.png" alt="Heat Chart" width="60px" height="60px">
           </button>
         </div>
       </div>
@@ -38,6 +50,7 @@
           data-toggle="tooltip"
           data-placement="right"
           title="Show legends"
+          v-if="currentView!='pieChart'"
         >
           <i class="material-icons">filter_list</i>
         </button>
@@ -109,6 +122,7 @@ export default {
       $(".rightbar-menu-main").removeClass("hidediv");
       if (t == "age") {
         $(".rightbarage").addClass("hidediv");
+        console.log($(".selectedou").attr('id'));
         EventBus.$emit("param-"+this.selected, {
           ou: $(".selectedou").attr('id'),
           type: "age"
@@ -137,6 +151,7 @@ export default {
   watch : {
     selected : function(v){
        this.sendParams("age");
+       EventBus.$emit('reset');
     }
   },
   mounted() {
@@ -158,7 +173,7 @@ export default {
 }
 
 .selected-option {
-  background-color: darkgray;
+  background-color: rgb(39, 102, 150);
 }
 button {
   padding: 10px 20px;
